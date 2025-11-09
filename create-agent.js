@@ -193,10 +193,10 @@ const assistantConfig = {
     emotionRecognitionEnabled: true
   },
   voice: {
-    provider: "playht",
-    voiceId: "charlotte",
-    speed: 1.05,
-    temperature: 0.8
+    provider: "11labs",
+    voiceId: "dMyQqiVXTU80dDl2eNK8",
+    stability: 0.5,
+    similarityBoost: 0.75
   },
   transcriber: {
     provider: "deepgram",
