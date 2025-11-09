@@ -64,13 +64,20 @@ export default function TrainingAssignment() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <div className="px-8 py-6">
+    <div className="min-h-screen bg-slate-50 relative">
+      <div className="px-8 py-6 relative z-10">
         {/* Logo Header - Same as Dashboard */}
         <div className="mb-4">
-          <div className="flex items-center gap-2">
-            <Shield className="w-6 h-6 text-blue-600" />
-            <h1 className="text-2xl font-bold text-slate-900">Cypher</h1>
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <Shield className="w-6 h-6 text-blue-600" />
+              <div className="absolute -inset-1 bg-blue-600/20 rounded-full blur-md -z-10"></div>
+            </div>
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Cypher</h1>
+            <div className="flex items-center gap-1.5 ml-2 px-2 py-0.5 bg-green-100 text-green-700 text-xs font-medium rounded-full">
+              <div className="w-1.5 h-1.5 bg-green-500 rounded-full pulse-dot"></div>
+              Live
+            </div>
           </div>
         </div>
 
@@ -81,13 +88,13 @@ export default function TrainingAssignment() {
               variant="ghost"
               size="sm"
               onClick={() => navigate('/')}
-              className="text-slate-600 hover:text-slate-900"
+              className="text-slate-600 hover:text-slate-900 hover:bg-slate-100 interactive-scale"
             >
               <ArrowLeft className="w-4 h-4" />
               Back
             </Button>
             <div className="border-l border-slate-300 h-4"></div>
-            <h2 className="text-lg font-semibold text-slate-900">
+            <h2 className="text-lg font-semibold text-slate-900 tracking-tight">
               Assign Training — {employee.name}
             </h2>
           </div>
@@ -96,6 +103,7 @@ export default function TrainingAssignment() {
               variant="outline"
               size="sm"
               onClick={handleCancel}
+              className="interactive-scale hover:shadow-sm transition-all"
             >
               <X className="w-4 h-4" />
               Cancel
@@ -104,6 +112,7 @@ export default function TrainingAssignment() {
               size="sm"
               disabled={!selectedScenario}
               onClick={() => setShowConfirmation(true)}
+              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 interactive-scale hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Rocket className="w-4 h-4" />
               Launch Training
