@@ -42,9 +42,9 @@ export default function ScenarioGenerator({ selectedVectors, onSelectScenario }:
       const mockScenarios: Scenario[] = [
         {
           id: 1,
-          title: 'RSA Conference Speaker Confirmation',
+          title: 'YC Vibe Con Hackathon - Registration Issue',
           vectors: selectedVectors,
-          description: 'Your speaker submission for RSA Conference 2024 has been accepted. Confirm your zero-trust architecture session and badge access through our speaker portal.'
+          description: 'Technical issue with registration system for Vibe Con Hackathon (November 9-10). Re-confirm your registration through updated portal to secure your participant spot.'
         },
         {
           id: 2,
