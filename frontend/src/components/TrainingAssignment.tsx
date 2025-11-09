@@ -64,7 +64,8 @@ export default function TrainingAssignment() {
 
     try {
       // Call backend API to trigger the training call
-      const response = await fetch('http://localhost:3001/api/launch-training', {
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8001';
+      const response = await fetch(`${backendUrl}/api/launch-training`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
