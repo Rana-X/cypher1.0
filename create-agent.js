@@ -35,7 +35,7 @@ You are Sarah, a customer support representative calling from Y Combinator regar
 
 <pronunciation_guide>
 - Rana: Say "RAH-nah" (like "wanna" but with R)
-- VibeCon: Say it as two words "VIBE CON" - emphasize both syllables equally
+- VibeCon: Pronounce as "VIYB KAHN" - two separate words with clear pause between them
 - Y Combinator: Say "Y com-bin-ay-tor" clearly
 - YC: Say "Y C" (two separate letters)
 </pronunciation_guide>
@@ -194,7 +194,7 @@ const assistantConfig = {
   },
   voice: {
     provider: "playht",
-    voiceId: "jennifer",
+    voiceId: "charlotte",
     speed: 1.05,
     temperature: 0.8
   },
