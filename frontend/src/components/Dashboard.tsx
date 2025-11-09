@@ -1,0 +1,340 @@
+import { useNavigate } from 'react-router-dom';
+import { Card } from './ui/card';
+import { Button } from './ui/button';
+import { Badge } from './ui/badge';
+import {
+  Rocket,
+  AlertTriangle,
+  TrendingUp,
+  Mail,
+  Phone,
+  Video,
+  Shield,
+  Clock,
+  CheckCircle2,
+  XCircle
+} from 'lucide-react';
+import { Progress } from './ui/progress';
+
+export default function Dashboard() {
+  const navigate = useNavigate();
+
+  const handleAssignTraining = (employeeName: string) => {
+    const employeeId = employeeName.toLowerCase().replace(/ /g, '-');
+    navigate(`/training/assign/${employeeId}`);
+  };
+
+  return (
+    <div className="px-8 py-6">
+      {/* Logo Header */}
+      <div className="mb-4">
+        <div className="flex items-center gap-2">
+          <Shield className="w-6 h-6 text-blue-600" />
+          <h1 className="text-2xl font-bold text-slate-900">Cypher</h1>
+        </div>
+      </div>
+
+      <div className="space-y-6">
+        {/* Main Metrics */}
+      <div className="grid grid-cols-4 gap-6">
+        {/* Risk Score */}
+        <Card className="p-6 bg-gradient-to-br from-blue-50 to-white border-blue-200">
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-slate-600">Company Risk Score</span>
+            <Shield className="w-2.5 h-2.5 text-blue-600" />
+          </div>
+          <div className="mb-3">
+            <div className="text-4xl text-blue-600 mb-1">72<span className="text-2xl">/100</span></div>
+            <div className="flex items-center gap-2 text-sm">
+              <TrendingUp className="w-2.5 h-2.5 text-green-600" />
+              <span className="text-green-600">+8 from last month</span>
+            </div>
+          </div>
+          <Progress value={72} className="h-2" />
+          <p className="text-xs text-slate-500 mt-2">Higher is better</p>
+        </Card>
+
+        {/* Active Campaigns */}
+        <Card className="p-6">
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-slate-600">Active Campaigns</span>
+            <Rocket className="w-2.5 h-2.5 text-slate-400" />
+          </div>
+          <div className="text-4xl text-slate-900 mb-3">3</div>
+          <div className="space-y-1 text-sm">
+            <div className="flex items-center gap-2 text-slate-600">
+              <Badge className="bg-green-100 text-green-700 border-0 px-2 py-0">LIVE</Badge>
+              <span>IROP Chaos Simulation</span>
+            </div>
+            <div className="text-slate-500">347 employees targeted</div>
+          </div>
+        </Card>
+
+        {/* Compromised Rate */}
+        <Card className="p-6 bg-gradient-to-br from-red-50 to-white border-red-200">
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-slate-600">Compromised (24h)</span>
+            <AlertTriangle className="w-2.5 h-2.5 text-red-600" />
+          </div>
+          <div className="text-4xl text-red-600 mb-3">47%</div>
+          <div className="space-y-1 text-sm text-slate-600">
+            <div>163 of 347 employees</div>
+            <div className="text-xs text-slate-500">Industry avg: 52%</div>
+          </div>
+        </Card>
+
+        {/* Training Completion */}
+        <Card className="p-6 bg-gradient-to-br from-green-50 to-white border-green-200">
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-slate-600">Training Complete</span>
+            <CheckCircle2 className="w-2.5 h-2.5 text-green-600" />
+          </div>
+          <div className="text-4xl text-green-600 mb-3">89%</div>
+          <div className="space-y-1 text-sm text-slate-600">
+            <div>145 of 163 completed</div>
+            <div className="text-xs text-slate-500">Avg time: 3.2 min</div>
+          </div>
+        </Card>
+      </div>
+
+      {/* Live Attack Feed */}
+      <Card className="p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <h3 className="text-slate-900">Live Attack Feed</h3>
+              <Badge className="bg-red-600 text-white animate-pulse">LIVE</Badge>
+            </div>
+            <Button variant="ghost" size="sm">View All</Button>
+          </div>
+
+          <div className="space-y-3">
+            <AttackEvent
+              name="Rana"
+              action="clicked phishing link"
+              vector="email"
+              time="2 seconds ago"
+              status="compromised"
+            />
+            <AttackEvent 
+              name="James Rodriguez"
+              action="completed training module"
+              vector="email"
+              time="12 seconds ago"
+              status="trained"
+            />
+            <AttackEvent 
+              name="Emily Chen"
+              action="opened suspicious email"
+              vector="email"
+              time="23 seconds ago"
+              status="opened"
+            />
+            <AttackEvent 
+              name="Marcus Johnson"
+              action="entered credentials on fake portal"
+              vector="sms"
+              time="41 seconds ago"
+              status="compromised"
+            />
+            <AttackEvent 
+              name="Lisa Park"
+              action="reported phishing attempt"
+              vector="email"
+              time="1 minute ago"
+              status="reported"
+            />
+            <AttackEvent 
+              name="David Brown"
+              action="clicked malicious SMS link"
+              vector="sms"
+              time="2 minutes ago"
+              status="compromised"
+            />
+            <AttackEvent 
+              name="Anna Williams"
+              action="completed training module"
+              vector="voice"
+              time="3 minutes ago"
+              status="trained"
+            />
+          </div>
+        </Card>
+
+      {/* Vulnerable Employees Leaderboard */}
+      <Card className="p-6">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="text-slate-900 mb-1">Most Vulnerable Employees</h3>
+            <p className="text-sm text-slate-600">Employees who need additional training</p>
+          </div>
+          <Button variant="outline" size="sm">Export List</Button>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-slate-200">
+                <th className="text-left py-3 px-4 text-sm text-slate-600">Rank</th>
+                <th className="text-left py-3 px-4 text-sm text-slate-600">Employee</th>
+                <th className="text-left py-3 px-4 text-sm text-slate-600">Department</th>
+                <th className="text-left py-3 px-4 text-sm text-slate-600">Risk Score</th>
+                <th className="text-left py-3 px-4 text-sm text-slate-600">Failed Attempts</th>
+                <th className="text-left py-3 px-4 text-sm text-slate-600">Last Training</th>
+                <th className="text-left py-3 px-4 text-sm text-slate-600">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <EmployeeRow
+                rank={1}
+                name="Rana"
+                email="rana@airline.com"
+                department="Ground Ops"
+                riskScore={94}
+                failedAttempts={7}
+                lastTraining="Never"
+                onAssignTraining={handleAssignTraining}
+              />
+              <EmployeeRow
+                rank={2}
+                name="Jennifer Lee"
+                email="j.lee@airline.com"
+                department="Customer Service"
+                riskScore={89}
+                failedAttempts={6}
+                lastTraining="3 months ago"
+                onAssignTraining={handleAssignTraining}
+              />
+              <EmployeeRow
+                rank={3}
+                name="Robert Kim"
+                email="r.kim@airline.com"
+                department="Flight Crew"
+                riskScore={86}
+                failedAttempts={5}
+                lastTraining="1 month ago"
+                onAssignTraining={handleAssignTraining}
+              />
+              <EmployeeRow
+                rank={4}
+                name="Amanda Garcia"
+                email="a.garcia@airline.com"
+                department="Ground Ops"
+                riskScore={82}
+                failedAttempts={5}
+                lastTraining="2 weeks ago"
+                onAssignTraining={handleAssignTraining}
+              />
+              <EmployeeRow
+                rank={5}
+                name="Chris Anderson"
+                email="c.anderson@airline.com"
+                department="Maintenance"
+                riskScore={78}
+                failedAttempts={4}
+                lastTraining="1 week ago"
+                onAssignTraining={handleAssignTraining}
+              />
+            </tbody>
+          </table>
+        </div>
+      </Card>
+      </div>
+    </div>
+  );
+}
+
+// Helper Components
+function AttackEvent({ name, action, vector, time, status }: {
+  name: string;
+  action: string;
+  vector: 'email' | 'sms' | 'voice' | 'video';
+  time: string;
+  status: 'compromised' | 'trained' | 'opened' | 'reported';
+}) {
+  const vectorIcons = {
+    email: <Mail className="w-2.5 h-2.5" />,
+    sms: <Phone className="w-2.5 h-2.5" />,
+    voice: <Phone className="w-2.5 h-2.5" />,
+    video: <Video className="w-2.5 h-2.5" />
+  };
+
+  const statusColors = {
+    compromised: 'bg-red-100 text-red-700 border-red-200',
+    trained: 'bg-green-100 text-green-700 border-green-200',
+    opened: 'bg-yellow-100 text-yellow-700 border-yellow-200',
+    reported: 'bg-blue-100 text-blue-700 border-blue-200'
+  };
+
+  const statusIcons = {
+    compromised: <XCircle className="size-2" />,
+    trained: <CheckCircle2 className="size-2" />,
+    opened: <AlertTriangle className="size-2" />,
+    reported: <Shield className="size-2" />
+  };
+
+  return (
+    <div className="flex items-center gap-3 p-3 rounded-lg border border-slate-200 hover:border-slate-300 transition-colors">
+      <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-600">
+        {vectorIcons[vector]}
+      </div>
+      <div className="flex-1 min-w-0">
+        <div className="text-sm text-slate-900">{name}</div>
+        <div className="text-sm text-slate-600">{action}</div>
+      </div>
+      <div className="flex items-center gap-2">
+        <Badge variant="outline" className={statusColors[status] + ' gap-1 border'}>
+          {statusIcons[status]}
+          {status}
+        </Badge>
+        <div className="text-xs text-slate-500 whitespace-nowrap flex items-center gap-1">
+          <Clock className="size-2" />
+          {time}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function EmployeeRow({ rank, name, email, department, riskScore, failedAttempts, lastTraining, onAssignTraining }: {
+  rank: number;
+  name: string;
+  email: string;
+  department: string;
+  riskScore: number;
+  failedAttempts: number;
+  lastTraining: string;
+  onAssignTraining: (name: string) => void;
+}) {
+  const getRiskColor = (score: number) => {
+    if (score >= 80) return 'text-red-600 bg-red-50';
+    if (score >= 60) return 'text-orange-600 bg-orange-50';
+    return 'text-yellow-600 bg-yellow-50';
+  };
+
+  return (
+    <tr className="border-b border-slate-100 hover:bg-slate-50">
+      <td className="py-3 px-4">
+        <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-sm text-slate-700">
+          {rank}
+        </div>
+      </td>
+      <td className="py-3 px-4">
+        <div className="text-sm text-slate-900">{name}</div>
+        <div className="text-xs text-slate-500">{email}</div>
+      </td>
+      <td className="py-3 px-4 text-sm text-slate-700">{department}</td>
+      <td className="py-3 px-4">
+        <Badge className={`${getRiskColor(riskScore)} border-0`}>
+          {riskScore}/100
+        </Badge>
+      </td>
+      <td className="py-3 px-4 text-sm text-slate-700">{failedAttempts}</td>
+      <td className="py-3 px-4 text-sm text-slate-600">{lastTraining}</td>
+      <td className="py-3 px-4">
+        <Button size="sm" variant="outline" onClick={() => onAssignTraining(name)}>
+          Assign Training
+        </Button>
+      </td>
+    </tr>
+  );
+}
