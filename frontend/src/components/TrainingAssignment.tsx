@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
-import { ArrowLeft, X, Rocket, Shield } from 'lucide-react';
+import { ArrowLeft, Shield } from 'lucide-react';
 import EmployeeProfile from './EmployeeProfile';
 import OsintScanner from './OsintScanner';
 import Integrations from './Integrations';
@@ -83,43 +83,21 @@ export default function TrainingAssignment() {
           </div>
         </div>
 
-        {/* Page Navigation & Actions */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => navigate('/')}
-              className="text-slate-600 hover:text-slate-900 hover:bg-slate-100 interactive-scale"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back
-            </Button>
-            <div className="border-l border-slate-300 h-4"></div>
-            <h2 className="text-lg font-semibold text-slate-900 tracking-tight">
-              Assign Training — {employee.name}
-            </h2>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleCancel}
-              className="interactive-scale hover:shadow-sm transition-all"
-            >
-              <X className="w-4 h-4" />
-              Cancel
-            </Button>
-            <Button
-              size="sm"
-              disabled={!selectedScenario}
-              onClick={() => setShowConfirmation(true)}
-              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 interactive-scale hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <Rocket className="w-4 h-4" />
-              Launch Training
-            </Button>
-          </div>
+        {/* Page Navigation */}
+        <div className="flex items-center gap-3 mb-6">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => navigate('/')}
+            className="text-slate-600 hover:text-slate-900 hover:bg-slate-100 interactive-scale"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back
+          </Button>
+          <div className="border-l border-slate-300 h-4"></div>
+          <h2 className="text-lg font-semibold text-slate-900 tracking-tight">
+            Assign Training — {employee.name}
+          </h2>
         </div>
 
         {/* Content */}
