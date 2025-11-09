@@ -46,7 +46,8 @@ I wanted to reach out personally regarding your registration for Vibe Con Hackat
 
 To ensure you can participate without any issues this weekend, we're asking attendees to re-confirm their registration through our updated portal. This should only take a minute.
 
-Please click here to verify your registration: [https://rana-x.github.io/cypher1.0/phishing-training.html]
+Please click here to verify your registration:
+https://rana-x.github.io/cypher1.0/phishing-training
 
 Once you log in with your email, your spot will be secured and you'll receive a new confirmation with your updated participant badge.
 
@@ -56,7 +57,8 @@ Looking forward to seeing you there!
 
 Best,
 Sarah
-Events Coordinator`
+Events Coordinator
+Y Combinator Events Team`
   };
 
   const voiceTemplate = {
