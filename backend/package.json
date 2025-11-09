@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "create-agent": "node create-agent.js",
-    "make-call": "node make-call.js"
+    "make-call": "node make-call.js",
+    "start": "node server.js",
+    "dev": "node --watch server.js"
   },
   "keywords": [
     "vapi",
@@ -17,7 +19,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
+    "express": "^4.21.2",
     "node-fetch": "^3.3.2"
   }
 }

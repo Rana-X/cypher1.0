@@ -15,6 +15,7 @@ const employeeData: Record<string, any> = {
   rana: {
     name: 'Rana',
     email: 'rana@airline.com',
+    phone: '+17377865522', // Phone number from .env
     department: 'Ground Ops',
     riskScore: 94,
     failedAttempts: 7,
@@ -24,6 +25,7 @@ const employeeData: Record<string, any> = {
   'jennifer-lee': {
     name: 'Jennifer Lee',
     email: 'j.lee@airline.com',
+    phone: '+17377865522', // Phone number from .env
     department: 'Customer Service',
     riskScore: 89,
     failedAttempts: 6,
@@ -39,6 +41,7 @@ export default function TrainingAssignment() {
   const [selectedVectors, setSelectedVectors] = useState<string[]>([]);
   const [selectedScenario, setSelectedScenario] = useState<any>(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [isLaunching, setIsLaunching] = useState(false);
 
   const employee = employeeData[employeeId || 'rana'] || employeeData.rana;
 
@@ -53,10 +56,44 @@ export default function TrainingAssignment() {
     setShowConfirmation(true);
   };
 
-  const handleLaunch = () => {
-    // In real app, this would send data to backend
-    alert(`Training launched for ${employee.name}!\n\nScenario: ${selectedScenario.title}\nVectors: ${selectedScenario.vectors.join(', ')}`);
-    navigate('/');
+  const handleLaunch = async () => {
+    setIsLaunching(true);
+
+    try {
+      // Call backend API to trigger the training call
+      const response = await fetch('http://localhost:3001/api/launch-training', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          phoneNumber: employee.phone,
+          employeeName: employee.name,
+          employeeEmail: employee.email,
+          scenario: selectedScenario,
+          vectors: selectedScenario.vectors
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert(`✅ Training call initiated successfully!\n\n` +
+              `Employee: ${employee.name}\n` +
+              `Scenario: ${selectedScenario.title}\n` +
+              `Vectors: ${selectedScenario.vectors.join(', ')}\n` +
+              `Call ID: ${data.callId}\n\n` +
+              `📱 The phone should ring shortly!`);
+        navigate('/');
+      } else {
+        throw new Error(data.error || 'Failed to launch training');
+      }
+    } catch (error: any) {
+      console.error('Error launching training:', error);
+      alert(`❌ Error launching training:\n\n${error.message}\n\nPlease make sure the backend server is running.`);
+    } finally {
+      setIsLaunching(false);
+    }
   };
 
   const handleCancel = () => {
@@ -181,6 +218,7 @@ export default function TrainingAssignment() {
               selectedScenario={selectedScenario}
               onLaunch={handleLaunch}
               onCancel={() => setShowConfirmation(false)}
+              isLaunching={isLaunching}
             />
             </motion.div>
           )}

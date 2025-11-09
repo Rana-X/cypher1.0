@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
-import { CheckCircle2, AlertTriangle, Rocket, Calendar, Clock } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, Rocket, Calendar, Clock, Loader2 } from 'lucide-react';
 
 interface LaunchConfirmationProps {
   employeeName: string;
@@ -14,6 +14,7 @@ interface LaunchConfirmationProps {
   } | null;
   onLaunch: () => void;
   onCancel: () => void;
+  isLaunching?: boolean;
 }
 
 export default function LaunchConfirmation({
@@ -21,7 +22,8 @@ export default function LaunchConfirmation({
   employeeEmail,
   selectedScenario,
   onLaunch,
-  onCancel
+  onCancel,
+  isLaunching = false
 }: LaunchConfirmationProps) {
   const [schedule, setSchedule] = useState<'now' | 'later'>('now');
 
@@ -123,16 +125,27 @@ export default function LaunchConfirmation({
           <Button
             variant="outline"
             onClick={onCancel}
+            disabled={isLaunching}
             className="interactive-scale hover:shadow-sm transition-all"
           >
             Cancel
           </Button>
           <Button
             onClick={onLaunch}
-            className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white gap-2 interactive-scale hover:shadow-lg transition-all"
+            disabled={isLaunching}
+            className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white gap-2 interactive-scale hover:shadow-lg transition-all disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            <Rocket className="w-4 h-4" />
-            Launch Training
+            {isLaunching ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                Launching Call...
+              </>
+            ) : (
+              <>
+                <Rocket className="w-4 h-4" />
+                Launch Training
+              </>
+            )}
           </Button>
         </div>
       </div>
