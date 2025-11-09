@@ -132,7 +132,7 @@ export default function LaunchConfirmation({
             className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white gap-2 interactive-scale hover:shadow-lg transition-all"
           >
             <Rocket className="w-4 h-4" />
-            Launch Training {schedule === 'now' ? 'Now' : 'Later'}
+            Launch Training
           </Button>
         </div>
       </div>

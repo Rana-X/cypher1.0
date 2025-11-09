@@ -19,7 +19,7 @@ export default function Integrations() {
       id: 'voice-cloning',
       name: 'Voice Cloning',
       icon: <Mic className="w-6 h-6" />,
-      description: 'ElevenLabs Ready',
+      description: 'Add Clip',
       enabled: true,
       status: 'ready'
     },
@@ -27,7 +27,7 @@ export default function Integrations() {
       id: 'documents',
       name: 'Documents',
       icon: <FileText className="w-6 h-6" />,
-      description: 'Templates Ready',
+      description: 'Add On',
       enabled: true,
       status: 'ready'
     },
@@ -35,7 +35,7 @@ export default function Integrations() {
       id: 'slack',
       name: 'Slack',
       icon: <MessageSquare className="w-6 h-6" />,
-      description: 'Connected',
+      description: 'Connect to Slack',
       enabled: true,
       status: 'connected'
     },
@@ -43,7 +43,7 @@ export default function Integrations() {
       id: 'email',
       name: 'Email',
       icon: <Mail className="w-6 h-6" />,
-      description: 'Not Connected',
+      description: 'Connect to Email',
       enabled: false,
       status: 'disconnected'
     }

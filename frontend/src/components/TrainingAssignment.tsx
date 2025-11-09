@@ -70,8 +70,10 @@ export default function TrainingAssignment() {
         <div className="mb-4">
           <div className="flex items-center gap-3">
             <div className="relative">
-              <Shield className="w-6 h-6 text-blue-600" />
-              <div className="absolute -inset-1 bg-blue-600/20 rounded-full blur-md -z-10"></div>
+              <div className="p-2 bg-white rounded-lg shadow-sm border border-blue-200/60">
+                <Shield className="w-6 h-6 text-blue-600" />
+              </div>
+              <div className="absolute -inset-1 bg-blue-600/30 rounded-lg blur-lg -z-10"></div>
             </div>
             <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Cypher</h1>
             <div className="flex items-center gap-1.5 ml-2 px-2 py-0.5 bg-green-100 text-green-700 text-xs font-medium rounded-full">
