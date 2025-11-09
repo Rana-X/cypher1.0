@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { Card } from './ui/card';
-import { Button } from './ui/button';
-import { Badge } from './ui/badge';
 import { Mic, FileText, MessageSquare, Mail, CheckCircle2, Settings } from 'lucide-react';
 
 interface Integration {
@@ -15,38 +13,38 @@ interface Integration {
 
 export default function Integrations() {
   const [integrations, setIntegrations] = useState<Integration[]>([
-    {
-      id: 'voice-cloning',
-      name: 'Voice Cloning',
-      icon: <Mic className="w-6 h-6" />,
-      description: 'Add Clip',
-      enabled: true,
-      status: 'ready'
-    },
+    // {
+    //   id: 'voice-cloning',
+    //   name: 'Voice Cloning',
+    //   icon: <Mic className="w-6 h-6" />,
+    //   description: 'Clone voices for realistic social engineering scenarios',
+    //   enabled: false,
+    //   status: 'disconnected'
+    // },
     {
       id: 'documents',
       name: 'Documents',
       icon: <FileText className="w-6 h-6" />,
-      description: 'Add On',
-      enabled: true,
+      description: 'Read internal documents about employee',
+      enabled: false,
       status: 'ready'
     },
     {
       id: 'slack',
       name: 'Slack',
       icon: <MessageSquare className="w-6 h-6" />,
-      description: 'Connect to Slack',
-      enabled: true,
+      description: 'Read Slack to gather more info about employee',
+      enabled: false,
       status: 'connected'
     },
-    {
-      id: 'email',
-      name: 'Email',
-      icon: <Mail className="w-6 h-6" />,
-      description: 'Connect to Email',
-      enabled: false,
-      status: 'disconnected'
-    }
+    // {
+    //   id: 'email',
+    //   name: 'Email',
+    //   icon: <Mail className="w-6 h-6" />,
+    //   description: 'Read previous emails between employee and others',
+    //   enabled: false,
+    //   status: 'disconnected'
+    // }
   ]);
 
   const toggleIntegration = (id: string) => {
@@ -55,18 +53,6 @@ export default function Integrations() {
         int.id === id ? { ...int, enabled: !int.enabled } : int
       )
     );
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'connected':
-      case 'ready':
-        return 'bg-green-100 text-green-700 border-green-200';
-      case 'disconnected':
-        return 'bg-slate-100 text-slate-600 border-slate-200';
-      default:
-        return 'bg-slate-100 text-slate-600 border-slate-200';
-    }
   };
 
   return (
@@ -106,16 +92,11 @@ export default function Integrations() {
 
             <h4 className="font-semibold text-slate-900 mb-2 tracking-tight">{integration.name}</h4>
 
-            <div className="flex items-center gap-1.5">
-              {(integration.status === 'connected' || integration.status === 'ready') && (
-                <div className="w-1.5 h-1.5 bg-green-500 rounded-full pulse-dot"></div>
-              )}
-              <Badge variant="outline" className={`${getStatusColor(integration.status)} text-xs border font-medium`}>
-                {integration.description}
-              </Badge>
-            </div>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              {integration.description}
+            </p>
 
-            {integration.enabled && (
+            {/* {integration.enabled && (
               <Button
                 variant="ghost"
                 size="sm"
@@ -127,7 +108,7 @@ export default function Integrations() {
               >
                 Configure
               </Button>
-            )}
+            )} */}
           </button>
         ))}
       </div>

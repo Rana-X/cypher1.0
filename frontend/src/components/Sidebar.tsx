@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
   GraduationCap,
@@ -10,7 +10,9 @@ import {
   Settings,
   Bell,
   FileText,
+  Plus,
 } from 'lucide-react';
+import { Button } from './ui/button';
 
 const navItems = [
   {
@@ -36,6 +38,8 @@ const navItems = [
 ];
 
 export default function Sidebar() {
+  const navigate = useNavigate();
+
   return (
     <aside className="fixed left-0 top-0 h-screen w-64 bg-white border-r border-slate-200 flex flex-col shadow-sm z-50">
       {/* Logo */}
@@ -55,6 +59,15 @@ export default function Sidebar() {
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto py-4">
         <div className="px-3 space-y-1">
+          {/* Add Bot Button */}
+          <Button
+            onClick={() => navigate('/bots/create')}
+            className="w-full justify-start gap-2 bg-blue-600 hover:bg-blue-700 text-white shadow-sm mb-3"
+          >
+            <Plus className="w-4 h-4" />
+            Add bot
+          </Button>
+
           {navItems.map((item) => (
             <NavLink
               key={item.path}

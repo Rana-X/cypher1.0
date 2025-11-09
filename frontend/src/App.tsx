@@ -13,6 +13,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/training/assign/:employeeId" element={<TrainingAssignment />} />
+            <Route path="/bots/create" element={<TrainingAssignment />} />
           </Routes>
         </main>
       </div>

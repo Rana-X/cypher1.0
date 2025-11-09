@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
-import { FileText, RefreshCw, Eye, Edit, Rocket, Mail, Phone, Mic } from 'lucide-react';
+import { FileText, RefreshCw, Rocket, Mail, Phone, Mic } from 'lucide-react';
 
 interface Scenario {
   id: number;
@@ -37,27 +37,27 @@ export default function ScenarioGenerator({ selectedVectors, onSelectScenario }:
     setIsGenerating(true);
     setSelectedScenarioId(null);
 
-    // Simulate AI generation
+    // Simulate AI generation - Tailored for Rana Patel (CISO)
     setTimeout(() => {
       const mockScenarios: Scenario[] = [
         {
           id: 1,
-          title: 'IROP Emergency Response',
+          title: 'RSA Conference Speaker Confirmation',
           vectors: selectedVectors,
-          description: 'Urgent: Gate change needed for Flight 237. Call this number immediately to confirm crew availability and operational status.'
+          description: 'Your speaker submission for RSA Conference 2024 has been accepted. Confirm your zero-trust architecture session and badge access through our speaker portal.'
         },
         {
           id: 2,
-          title: 'IT Security Update Required',
-          vectors: selectedVectors.filter(v => v !== 'voice'),
-          description: 'Your VPN certificate expires in 1 hour. Click here to renew and avoid account lockout. Immediate action required.'
+          title: 'SOC 2 Audit Follow-up',
+          vectors: selectedVectors,
+          description: 'Post-certification verification needed for your recent SOC 2 Type II achievement. Minor documentation discrepancy requires immediate review of security controls.'
         },
         {
           id: 3,
-          title: 'Executive Request',
-          vectors: selectedVectors,
-          description: 'This is the CEO\'s assistant. We need the Ground Ops report for the board meeting in 30 minutes. Please send immediately.'
-        }
+          title: 'Critical Security Vendor Alert',
+          vectors: selectedVectors.filter(v => v !== 'voice'),
+          description: 'Urgent: Zero-day vulnerability detected in your cloud security infrastructure. Immediate patch deployment required to maintain compliance posture.'
+        },
       ];
       setScenarios(mockScenarios);
       setIsGenerating(false);
@@ -110,7 +110,7 @@ export default function ScenarioGenerator({ selectedVectors, onSelectScenario }:
             <div className="absolute -inset-1 bg-emerald-600/20 rounded-full blur-md -z-10"></div>
           </div>
           <h3 className="text-lg font-semibold text-slate-900 tracking-tight">
-            Generated Attack Scenarios ({scenarios.length})
+            Select Attack Scenario
           </h3>
         </div>
         <Button variant="outline" size="sm" onClick={generateScenarios} className="interactive-scale hover:shadow-sm transition-all">
@@ -121,31 +121,19 @@ export default function ScenarioGenerator({ selectedVectors, onSelectScenario }:
 
       <div className="space-y-3">
         {scenarios.map((scenario) => (
-          <button
+          <div
             key={scenario.id}
-            onClick={() => handleSelectScenario(scenario)}
-            className={`w-full p-4 rounded-lg border-2 transition-all text-left relative interactive-scale ${
+            className={`w-full p-4 rounded-lg border-2 transition-all relative cursor-pointer select-none ${
               selectedScenarioId === scenario.id
                 ? 'border-emerald-500 bg-gradient-to-br from-emerald-50 to-white shadow-md hover:shadow-lg'
                 : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm'
             }`}
+            onClick={() => handleSelectScenario(scenario)}
           >
-            {selectedScenarioId === scenario.id && (
-              <div className="absolute -inset-0.5 bg-emerald-400/20 rounded-lg blur-md -z-10"></div>
-            )}
             <div className="flex items-start gap-3">
-              {/* Radio Button */}
-              <div className="mt-1">
-                <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
-                  selectedScenarioId === scenario.id
-                    ? 'border-emerald-600 bg-emerald-600 shadow-sm'
-                    : 'border-slate-300 bg-white'
-                }`}>
-                  {selectedScenarioId === scenario.id && (
-                    <div className="w-2 h-2 rounded-full bg-white animate-in fade-in zoom-in duration-200"></div>
-                  )}
-                </div>
-              </div>
+             <div className='w-5 h-5 border border-slate-900 rounded-full flex items-center justify-center'>
+              {selectedScenarioId === scenario.id && <div className="w-2 h-2 bg-slate-900 rounded-full"></div>}
+             </div>
 
               {/* Scenario Content */}
               <div className="flex-1">
@@ -166,39 +154,12 @@ export default function ScenarioGenerator({ selectedVectors, onSelectScenario }:
                   </div>
                 </div>
 
-                <p className="text-sm text-slate-600 mb-3 leading-relaxed font-medium">
+                <p className="text-sm text-slate-600 leading-relaxed font-medium">
                   "{scenario.description}"
                 </p>
-
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="interactive-scale hover:bg-slate-100"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      // Handle edit
-                    }}
-                  >
-                    <Edit className="w-3 h-3" />
-                    Edit
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="interactive-scale hover:bg-slate-100"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      // Handle preview
-                    }}
-                  >
-                    <Eye className="w-3 h-3" />
-                    Preview
-                  </Button>
-                </div>
               </div>
             </div>
-          </button>
+          </div>
         ))}
       </div>
 

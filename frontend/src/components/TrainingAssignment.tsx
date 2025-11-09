@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
 import { ArrowLeft, Shield } from 'lucide-react';
+import EmployeeUpload from './EmployeeUpload';
 import EmployeeProfile from './EmployeeProfile';
 import OsintScanner from './OsintScanner';
 import Integrations from './Integrations';
@@ -13,14 +14,16 @@ import { motion } from 'framer-motion';
 // Mock employee data - in real app, this would come from API/context
 const employeeData: Record<string, any> = {
   rana: {
-    name: 'Rana',
-    email: 'rana@airline.com',
+    name: 'Rana Patel',
+    email: 'rana.patel@techvision.io',
     phone: '+17377865522', // Phone number from .env
-    department: 'Ground Ops',
-    riskScore: 94,
-    failedAttempts: 7,
+    department: 'Executive Leadership',
+    title: 'Chief Information Security Officer (CISO)',
+    company: 'TechVision Solutions',
+    riskScore: 98,
+    failedAttempts: 0,
     lastTraining: 'Never',
-    location: 'SFO'
+    location: 'Austin, TX'
   },
   'jennifer-lee': {
     name: 'Jennifer Lee',
@@ -105,7 +108,7 @@ export default function TrainingAssignment() {
       <div className="px-8 py-6 relative z-10">
         {/* Logo Header - Same as Dashboard */}
         <div className="mb-4">
-          <div className="flex items-center gap-3">
+          {/* <div className="flex items-center gap-3">
             <div className="relative">
               <div className="p-2 bg-white rounded-lg shadow-sm border border-blue-200/60">
                 <Shield className="w-6 h-6 text-blue-600" />
@@ -117,12 +120,12 @@ export default function TrainingAssignment() {
               <div className="w-1.5 h-1.5 bg-green-500 rounded-full pulse-dot"></div>
               Live
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* Page Navigation */}
         <div className="flex items-center gap-3 mb-6">
-          <Button
+          {/* <Button
             variant="ghost"
             size="sm"
             onClick={() => navigate('/')}
@@ -130,11 +133,11 @@ export default function TrainingAssignment() {
           >
             <ArrowLeft className="w-4 h-4" />
             Back
-          </Button>
+          </Button> */}
           <div className="border-l border-slate-300 h-4"></div>
-          <h2 className="text-lg font-semibold text-slate-900 tracking-tight">
-            Assign Training — {employee.name}
-          </h2>
+          <h1 className="font-semibold text-slate-900 tracking-tight text-[24px]">
+            Create Training Bot
+          </h1>
         </div>
 
         {/* Content */}
@@ -144,13 +147,22 @@ export default function TrainingAssignment() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
         >
+          {/* Employee Upload */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            <EmployeeUpload />
+          </motion.div>
+
           {/* Employee Profile */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-          <EmployeeProfile
+          {/* <EmployeeProfile
             name={employee.name}
             email={employee.email}
             department={employee.department}
@@ -158,7 +170,7 @@ export default function TrainingAssignment() {
             failedAttempts={employee.failedAttempts}
             lastTraining={employee.lastTraining}
             location={employee.location}
-          />
+          /> */}
           </motion.div>
 
           {/* OSINT Scanner */}
@@ -167,10 +179,10 @@ export default function TrainingAssignment() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-          <OsintScanner
+          {/* <OsintScanner
             employeeName={employee.name}
             employeeEmail={employee.email}
-          />
+          /> */}
           </motion.div>
 
           {/* Integrations */}
