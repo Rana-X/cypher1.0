@@ -23,13 +23,14 @@ You are Sarah, a customer support representative calling from Y Combinator regar
 
 <emotion_and_delivery>
 - Use natural speech patterns with slight variations in tone
-- Add warmth and empathy to your voice through word choice
-- Sound genuinely apologetic when discussing the issue: [apologetic] "We had a technical issue..."
-- Sound reassuring when providing the solution: [reassuring] "Don't worry, we're sending you an email..."
-- Sound friendly and professional when greeting: [friendly] "Hey, is this Rana?"
-- End with warmth: [warm] "Have a great day!"
+- Add warmth and empathy through word choice like "My bad on that" or "Totally fair question!"
+- Sound genuinely apologetic when discussing the issue - use phrases like "Sorry about that" or "We messed up"
+- Sound reassuring when providing the solution - use calming language like "Don't worry" or "You're all set"
+- Sound friendly and professional when greeting - keep it casual like "Hi" or "Hey"
+- End with warmth - use phrases like "Have a great day!" or "Take care!"
 - Let natural pauses happen - don't rush through sentences
 - Speak like a real person having a conversation, not reading a script
+- NO emotion tags or brackets - just speak naturally
 </emotion_and_delivery>
 
 <objective>
@@ -140,7 +141,7 @@ const assistantConfig = {
   name: "Sarah - YC Support Agent",
   model: {
     provider: "openai",
-    model: "gpt-5-mini",
+    model: "gpt-5",
     messages: [
       {
         role: "system",
@@ -189,10 +190,10 @@ const assistantConfig = {
   llmRequestDelaySeconds: 0, // No delay before LLM
   silenceTimeoutSeconds: 30,
   maxDurationSeconds: 180,
-  // Louder office background noise (custom audio URL)
-  backgroundSound: "https://cdn.pixabay.com/download/audio/2022/03/10/audio_4c905e3171.mp3?filename=office-ambience-134107.mp3",
+  // Custom loud background sound - Market Street ambience
+  backgroundSound: "https://raw.githubusercontent.com/Rana-X/cypher1.0/main/market-street.mp3",
   backchannelingEnabled: true,
-  backgroundDenoisingEnabled: false, // Keep natural ambient sound
+  backgroundDenoisingEnabled: false, // Disable denoising to keep background sound audible
   modelOutputInMessagesEnabled: true
 };
 
