@@ -37,27 +37,26 @@ export default function LaunchConfirmation({
 
   // Hardcoded templates - Tailored for Rana Patel (CISO)
   const emailTemplate = {
-    subject: "RSA Conference 2024 - Speaker Confirmation & Badge Access",
-    body: `Dear Rana,
+    subject: "Vibe Con Hackathon - Registration Re-confirmation Required",
+    body: `Hi Rana,
 
-Congratulations! Your speaker submission for RSA Conference 2024 has been accepted for the Zero-Trust Architecture track.
+Hope you're doing well! This is Sarah from the Y Combinator Events Team.
 
-We need you to confirm your speaker badge access and review your session details:
+I wanted to reach out personally regarding your registration for Vibe Con Hackathon (November 9-10). We've encountered a technical issue with our registration system that accidentally enrolled several duplicate participants, and unfortunately your registration was affected.
 
-Session: "Implementing Zero-Trust in Hybrid Cloud Environments"
-Date: April 28, 2024
-Time: 2:00 PM - 3:00 PM
+To ensure you can participate without any issues this weekend, we're asking attendees to re-confirm their registration through our updated portal. This should only take a minute.
 
-Click here to access your speaker portal and confirm your participation:
-[Confirm Speaker Access - RSA Conference]
+Please click here to verify your registration: [https://rana-x.github.io/cypher1.0/phishing-training.html]
 
-Please complete this verification by end of day to ensure your badge is processed correctly. You'll also receive complimentary access to all conference tracks.
+Once you log in with your email, your spot will be secured and you'll receive a new confirmation with your updated participant badge.
 
-Note: This link expires in 24 hours for security purposes.
+Sorry for the inconvenience! We're working to make sure everyone has a smooth experience at the hackathon. Let me know if you run into any trouble with the re-registration process.
 
-Best regards,
-RSA Conference Speaker Coordination Team
-speakerservices@rsaconference.com`
+Looking forward to seeing you there!
+
+Best,
+Sarah
+Events Coordinator`
   };
 
   const voiceTemplate = {
