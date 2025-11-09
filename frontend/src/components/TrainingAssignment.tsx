@@ -8,6 +8,7 @@ import Integrations from './Integrations';
 import AttackVectorSelector from './AttackVectorSelector';
 import ScenarioGenerator from './ScenarioGenerator';
 import LaunchConfirmation from './LaunchConfirmation';
+import { motion } from 'framer-motion';
 
 // Mock employee data - in real app, this would come from API/context
 const employeeData: Record<string, any> = {
@@ -111,8 +112,18 @@ export default function TrainingAssignment() {
         </div>
 
         {/* Content */}
-        <div className="space-y-6">
+        <motion.div
+          className="space-y-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+        >
           {/* Employee Profile */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
           <EmployeeProfile
             name={employee.name}
             email={employee.email}
@@ -122,29 +133,59 @@ export default function TrainingAssignment() {
             lastTraining={employee.lastTraining}
             location={employee.location}
           />
+          </motion.div>
 
           {/* OSINT Scanner */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
           <OsintScanner
             employeeName={employee.name}
             employeeEmail={employee.email}
           />
+          </motion.div>
 
           {/* Integrations */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
           <Integrations />
+          </motion.div>
 
           {/* Attack Vector Selection */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
           <AttackVectorSelector onGenerate={handleVectorGenerate} />
+          </motion.div>
 
           {/* Scenario Generator */}
           {selectedVectors.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
             <ScenarioGenerator
               selectedVectors={selectedVectors}
               onSelectScenario={handleScenarioSelect}
             />
+            </motion.div>
           )}
 
           {/* Launch Confirmation */}
           {showConfirmation && selectedScenario && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+            >
             <LaunchConfirmation
               employeeName={employee.name}
               employeeEmail={employee.email}
@@ -152,8 +193,9 @@ export default function TrainingAssignment() {
               onLaunch={handleLaunch}
               onCancel={() => setShowConfirmation(false)}
             />
+            </motion.div>
           )}
-        </div>
+        </motion.div>
       </div>
     </div>
   );

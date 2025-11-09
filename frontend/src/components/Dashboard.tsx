@@ -15,6 +15,7 @@ import {
   XCircle
 } from 'lucide-react';
 import { Progress } from './ui/progress';
+import { motion } from 'framer-motion';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -24,20 +25,53 @@ export default function Dashboard() {
     navigate(`/training/assign/${employeeId}`);
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: [0.4, 0, 0.2, 1]
+      }
+    }
+  };
+
   return (
     <div className="px-8 py-6">
       {/* Logo Header */}
-      <div className="mb-4">
+      <motion.div
+        className="mb-4"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+      >
         <div className="flex items-center gap-2">
           <Shield className="w-6 h-6 text-blue-600" />
           <h1 className="text-2xl font-bold text-slate-900">Cypher</h1>
         </div>
-      </div>
+      </motion.div>
 
       <div className="space-y-6">
         {/* Main Metrics */}
-      <div className="grid grid-cols-4 gap-6">
+      <motion.div
+        className="grid grid-cols-4 gap-6"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         {/* Risk Score */}
+        <motion.div variants={itemVariants}>
         <Card className="p-6 bg-white border-slate-200/60 shadow-sm hover:shadow-md card-hover">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs uppercase tracking-wide text-slate-500 font-medium">Company Risk Score</span>
@@ -55,8 +89,10 @@ export default function Dashboard() {
           <Progress value={72} className="h-1 rounded-full" />
           <p className="text-xs text-slate-500 mt-3">Higher is better</p>
         </Card>
+        </motion.div>
 
         {/* Active Campaigns */}
+        <motion.div variants={itemVariants}>
         <Card className="p-6 bg-white border-slate-200/60 shadow-sm hover:shadow-md card-hover">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs uppercase tracking-wide text-slate-500 font-medium">Active Campaigns</span>
@@ -71,8 +107,10 @@ export default function Dashboard() {
             <div className="text-sm text-slate-500">347 employees targeted</div>
           </div>
         </Card>
+        </motion.div>
 
         {/* Compromised Rate */}
+        <motion.div variants={itemVariants}>
         <Card className="p-6 bg-white border-slate-200/60 shadow-sm hover:shadow-md card-hover">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs uppercase tracking-wide text-slate-500 font-medium">Compromised (24h)</span>
@@ -84,8 +122,10 @@ export default function Dashboard() {
             <div className="text-xs text-slate-500">Industry avg: 52%</div>
           </div>
         </Card>
+        </motion.div>
 
         {/* Training Completion */}
+        <motion.div variants={itemVariants}>
         <Card className="p-6 bg-white border-slate-200/60 shadow-sm hover:shadow-md card-hover">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs uppercase tracking-wide text-slate-500 font-medium">Training Complete</span>
@@ -97,9 +137,15 @@ export default function Dashboard() {
             <div className="text-xs text-slate-500">Avg time: 3.2 min</div>
           </div>
         </Card>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Live Attack Feed */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.4, ease: [0.4, 0, 0.2, 1] }}
+      >
       <Card className="p-6 bg-white border-slate-200/60 shadow-sm hover:shadow-md card-hover">
           <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-3">
@@ -161,8 +207,14 @@ export default function Dashboard() {
             />
           </div>
         </Card>
+      </motion.div>
 
       {/* Vulnerable Employees Leaderboard */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.5, ease: [0.4, 0, 0.2, 1] }}
+      >
       <Card className="p-6 bg-white border-slate-200/60 shadow-sm hover:shadow-md card-hover">
         <div className="flex items-center justify-between mb-5">
           <div>
@@ -172,20 +224,22 @@ export default function Dashboard() {
           <Button variant="outline" size="sm" className="border-slate-300 hover:bg-slate-50">Export List</Button>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-slate-200">
-                <th className="text-left py-3 px-4 text-sm text-slate-600">Rank</th>
-                <th className="text-left py-3 px-4 text-sm text-slate-600">Employee</th>
-                <th className="text-left py-3 px-4 text-sm text-slate-600">Department</th>
-                <th className="text-left py-3 px-4 text-sm text-slate-600">Risk Score</th>
-                <th className="text-left py-3 px-4 text-sm text-slate-600">Failed Attempts</th>
-                <th className="text-left py-3 px-4 text-sm text-slate-600">Last Training</th>
-                <th className="text-left py-3 px-4 text-sm text-slate-600">Action</th>
-              </tr>
-            </thead>
-            <tbody>
+        <div className="overflow-x-auto -mx-6">
+          <div className="inline-block min-w-full align-middle">
+            <div className="overflow-hidden">
+              <table className="min-w-full">
+                <thead className="bg-slate-50/80 sticky top-0 z-10">
+                  <tr className="border-y border-slate-200">
+                    <th className="text-left py-3 px-6 text-xs uppercase tracking-wider text-slate-600 font-medium">Rank</th>
+                    <th className="text-left py-3 px-6 text-xs uppercase tracking-wider text-slate-600 font-medium">Employee</th>
+                    <th className="text-left py-3 px-6 text-xs uppercase tracking-wider text-slate-600 font-medium">Department</th>
+                    <th className="text-left py-3 px-6 text-xs uppercase tracking-wider text-slate-600 font-medium">Risk Score</th>
+                    <th className="text-left py-3 px-6 text-xs uppercase tracking-wider text-slate-600 font-medium">Failed Attempts</th>
+                    <th className="text-left py-3 px-6 text-xs uppercase tracking-wider text-slate-600 font-medium">Last Training</th>
+                    <th className="text-left py-3 px-6 text-xs uppercase tracking-wider text-slate-600 font-medium">Action</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-slate-100">
               <EmployeeRow
                 rank={1}
                 name="Rana"
@@ -236,10 +290,13 @@ export default function Dashboard() {
                 lastTraining="1 week ago"
                 onAssignTraining={handleAssignTraining}
               />
-            </tbody>
-          </table>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </Card>
+      </motion.div>
       </div>
     </div>
   );
@@ -308,32 +365,41 @@ function EmployeeRow({ rank, name, email, department, riskScore, failedAttempts,
   onAssignTraining: (name: string) => void;
 }) {
   const getRiskColor = (score: number) => {
-    if (score >= 80) return 'text-red-600 bg-red-50';
-    if (score >= 60) return 'text-orange-600 bg-orange-50';
-    return 'text-yellow-600 bg-yellow-50';
+    if (score >= 80) return 'text-red-600 bg-red-50 border-red-100';
+    if (score >= 60) return 'text-orange-600 bg-orange-50 border-orange-100';
+    return 'text-yellow-600 bg-yellow-50 border-yellow-100';
   };
 
   return (
-    <tr className="border-b border-slate-100 hover:bg-slate-50">
-      <td className="py-3 px-4">
-        <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-sm text-slate-700">
+    <tr className="hover:bg-slate-50/50 transition-colors group">
+      <td className="py-4 px-6">
+        <div className="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-sm font-medium text-slate-700 group-hover:bg-slate-200 transition-colors">
           {rank}
         </div>
       </td>
-      <td className="py-3 px-4">
-        <div className="text-sm text-slate-900">{name}</div>
-        <div className="text-xs text-slate-500">{email}</div>
+      <td className="py-4 px-6">
+        <div className="text-sm font-medium text-slate-900">{name}</div>
+        <div className="text-xs text-slate-500 mt-0.5">{email}</div>
       </td>
-      <td className="py-3 px-4 text-sm text-slate-700">{department}</td>
-      <td className="py-3 px-4">
-        <Badge className={`${getRiskColor(riskScore)} border-0`}>
+      <td className="py-4 px-6 text-sm text-slate-700">{department}</td>
+      <td className="py-4 px-6">
+        <Badge className={`${getRiskColor(riskScore)} border font-medium`}>
           {riskScore}/100
         </Badge>
       </td>
-      <td className="py-3 px-4 text-sm text-slate-700">{failedAttempts}</td>
-      <td className="py-3 px-4 text-sm text-slate-600">{lastTraining}</td>
-      <td className="py-3 px-4">
-        <Button size="sm" variant="outline" onClick={() => onAssignTraining(name)}>
+      <td className="py-4 px-6">
+        <span className="text-sm font-medium text-slate-900">{failedAttempts}</span>
+      </td>
+      <td className="py-4 px-6">
+        <span className="text-sm text-slate-600">{lastTraining}</span>
+      </td>
+      <td className="py-4 px-6">
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => onAssignTraining(name)}
+          className="border-slate-300 hover:border-blue-600 hover:text-blue-600 hover:bg-blue-50 transition-colors"
+        >
           Assign Training
         </Button>
       </td>
