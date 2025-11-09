@@ -64,7 +64,8 @@ export default function TrainingAssignment() {
 
     try {
       // Call backend API to trigger the training call
-      const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8001';
+      // Use relative URL for production/preview, localhost for development
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || '';
       const response = await fetch(`${backendUrl}/api/launch-training`, {
         method: 'POST',
         headers: {
