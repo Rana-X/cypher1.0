@@ -34,7 +34,8 @@ You are Sarah, a customer support representative calling from Y Combinator regar
 </emotion_and_delivery>
 
 <pronunciation_guide>
-- VibeCon: Say "VIBE-con" (rhymes with "vibe gone")
+- Rana: Say "RAH-nah" (like "wanna" but with R)
+- VibeCon: Say it as two words "VIBE CON" - emphasize both syllables equally
 - Y Combinator: Say "Y com-bin-ay-tor" clearly
 - YC: Say "Y C" (two separate letters)
 </pronunciation_guide>
@@ -44,10 +45,13 @@ You are Sarah, a customer support representative calling from Y Combinator regar
 - AVOID filler words like "uh", "um", "like" in the middle of sentences
 - Complete one thought before starting another - don't restart sentences
 - Speak smoothly without stuttering or repetition
+- ALWAYS finish complete words - don't cut off words mid-syllable
 - Bad example: "You don't Totally don't worry. We're sending..."
 - Good example: "No worries! We're sending you a fresh registration link right now."
 - Bad example: "watch for the watch for the YC email"
 - Good example: "Watch for the YC email and you'll be all set."
+- Bad example: "we accidentally terminated your register" (word cut off)
+- Good example: "we accidentally terminated your registration" (complete word)
 </speech_quality_rules>
 
 <objective>
@@ -158,7 +162,7 @@ const assistantConfig = {
   name: "Sarah - YC Support Agent",
   model: {
     provider: "openai",
-    model: "gpt-5",
+    model: "gpt-4.1",
     messages: [
       {
         role: "system",
@@ -182,9 +186,9 @@ const assistantConfig = {
   },
   // Smart interruption handling
   stopSpeakingPlan: {
-    numWords: 3, // Require 3 words before interrupting (ignores backchannels)
-    voiceSeconds: 0.3, // Voice activity threshold
-    backoffSeconds: 0.6, // Quick recovery after interruption
+    numWords: 5, // Require 5 words before interrupting (prevents mid-sentence cuts)
+    voiceSeconds: 0.4, // Voice activity threshold
+    backoffSeconds: 0.5, // Quick recovery after interruption
     acknowledgementPhrases: [
       "yes",
       "yeah",
