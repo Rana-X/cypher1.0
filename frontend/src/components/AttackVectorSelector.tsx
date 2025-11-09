@@ -68,10 +68,13 @@ export default function AttackVectorSelector({ onGenerate }: AttackVectorSelecto
   };
 
   return (
-    <Card className="p-6">
+    <Card className="p-6 bg-gradient-to-br from-red-50 to-white border-red-200/60 shadow-sm hover:shadow-xl card-hover gradient-overlay group">
       <div className="flex items-center gap-2 mb-4">
-        <Target className="w-5 h-5 text-slate-600" />
-        <h3 className="text-lg font-semibold text-slate-900">Select Attack Vectors</h3>
+        <div className="relative">
+          <Target className="w-5 h-5 text-red-600" />
+          <div className="absolute -inset-1 bg-red-600/20 rounded-full blur-md -z-10"></div>
+        </div>
+        <h3 className="text-lg font-semibold text-slate-900 tracking-tight">Select Attack Vectors</h3>
       </div>
 
       <div className="space-y-3">
@@ -80,20 +83,23 @@ export default function AttackVectorSelector({ onGenerate }: AttackVectorSelecto
             key={vector.id}
             onClick={() => toggleVector(vector.id)}
             disabled={vector.comingSoon}
-            className={`w-full p-4 rounded-lg border-2 transition-all text-left ${
+            className={`w-full p-4 rounded-lg border-2 transition-all text-left relative ${
               vector.comingSoon
                 ? 'border-slate-200 bg-slate-50 opacity-60 cursor-not-allowed'
                 : vector.enabled
-                ? 'border-blue-500 bg-blue-50'
-                : 'border-slate-200 bg-white hover:border-slate-300'
+                ? 'border-red-500 bg-gradient-to-br from-red-50 to-white shadow-md hover:shadow-lg interactive-scale'
+                : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm interactive-scale'
             }`}
           >
+            {vector.enabled && !vector.comingSoon && (
+              <div className="absolute -inset-0.5 bg-red-400/20 rounded-lg blur-md -z-10"></div>
+            )}
             <div className="flex items-start gap-3">
-              <div className={`p-2 rounded-lg mt-0.5 ${
+              <div className={`p-2 rounded-lg mt-0.5 transition-all ${
                 vector.comingSoon
                   ? 'bg-slate-200 text-slate-400'
                   : vector.enabled
-                  ? 'bg-blue-100 text-blue-600'
+                  ? 'bg-red-100 text-red-600 shadow-sm group-hover:scale-110'
                   : 'bg-slate-100 text-slate-600'
               }`}>
                 {vector.icon}
@@ -101,14 +107,14 @@ export default function AttackVectorSelector({ onGenerate }: AttackVectorSelecto
 
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
-                  <h4 className="font-semibold text-slate-900">{vector.name}</h4>
+                  <h4 className="font-semibold text-slate-900 tracking-tight">{vector.name}</h4>
                   {vector.comingSoon && (
-                    <Badge className="bg-slate-200 text-slate-700 border-0 text-xs">
+                    <Badge className="bg-slate-200 text-slate-700 border-0 text-xs font-medium">
                       COMING SOON
                     </Badge>
                   )}
                   {vector.enabled && !vector.comingSoon && (
-                    <CheckCircle2 className="w-5 h-5 text-blue-600 ml-auto" />
+                    <CheckCircle2 className="w-5 h-5 text-red-600 ml-auto animate-in fade-in zoom-in duration-200" />
                   )}
                 </div>
                 <p className="text-sm text-slate-600">{vector.description}</p>
@@ -118,14 +124,15 @@ export default function AttackVectorSelector({ onGenerate }: AttackVectorSelecto
         ))}
       </div>
 
-      <div className="mt-4 flex items-center justify-between p-3 bg-slate-50 rounded-lg">
-        <div className="text-sm text-slate-700">
-          <strong>{selectedCount}</strong> vector{selectedCount !== 1 ? 's' : ''} selected
+      <div className="mt-4 flex items-center justify-between p-3 bg-gradient-to-r from-red-50 to-orange-50 rounded-lg border border-red-200/60 shadow-sm">
+        <div className="text-sm text-slate-900">
+          <span className="font-bold text-red-700 metric-number">{selectedCount}</span>
+          <span className="font-medium"> vector{selectedCount !== 1 ? 's' : ''} selected</span>
         </div>
         <Button
           onClick={handleGenerate}
           disabled={selectedCount === 0}
-          className="gap-2"
+          className="gap-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 interactive-scale hover:shadow-lg transition-all disabled:opacity-50"
         >
           Generate Attack Scenarios
           <Target className="w-4 h-4" />

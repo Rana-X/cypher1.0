@@ -77,14 +77,21 @@ export default function ScenarioGenerator({ selectedVectors, onSelectScenario }:
 
   if (isGenerating) {
     return (
-      <Card className="p-6">
+      <Card className="p-6 bg-gradient-to-br from-blue-50 to-white border-blue-200/60 shadow-sm hover:shadow-xl card-hover gradient-overlay">
         <div className="flex items-center gap-2 mb-4">
-          <RefreshCw className="w-5 h-5 text-blue-600 animate-spin" />
-          <h3 className="text-lg font-semibold text-slate-900">Generating Attack Scenarios...</h3>
+          <div className="relative">
+            <RefreshCw className="w-5 h-5 text-blue-600 animate-spin" />
+            <div className="absolute -inset-1 bg-blue-600/20 rounded-full blur-md -z-10"></div>
+          </div>
+          <h3 className="text-lg font-semibold text-slate-900 tracking-tight">Generating Attack Scenarios...</h3>
         </div>
         <div className="text-center py-12">
-          <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-slate-600">AI is creating realistic attack scenarios...</p>
+          <div className="relative inline-block">
+            <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
+            <div className="absolute -inset-2 bg-blue-400/20 rounded-full blur-xl -z-10 pulse-dot"></div>
+          </div>
+          <p className="text-slate-700 font-medium">✨ AI is crafting realistic attack scenarios...</p>
+          <p className="text-xs text-slate-500 mt-2">Analyzing attack vectors and generating custom scenarios</p>
         </div>
       </Card>
     );
@@ -95,15 +102,18 @@ export default function ScenarioGenerator({ selectedVectors, onSelectScenario }:
   }
 
   return (
-    <Card className="p-6">
+    <Card className="p-6 bg-gradient-to-br from-emerald-50 to-white border-emerald-200/60 shadow-sm hover:shadow-xl card-hover gradient-overlay group">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <FileText className="w-5 h-5 text-slate-600" />
-          <h3 className="text-lg font-semibold text-slate-900">
+          <div className="relative">
+            <FileText className="w-5 h-5 text-emerald-600" />
+            <div className="absolute -inset-1 bg-emerald-600/20 rounded-full blur-md -z-10"></div>
+          </div>
+          <h3 className="text-lg font-semibold text-slate-900 tracking-tight">
             Generated Attack Scenarios ({scenarios.length})
           </h3>
         </div>
-        <Button variant="outline" size="sm" onClick={generateScenarios}>
+        <Button variant="outline" size="sm" onClick={generateScenarios} className="interactive-scale hover:shadow-sm transition-all">
           <RefreshCw className="w-4 h-4" />
           Regenerate
         </Button>
@@ -114,22 +124,25 @@ export default function ScenarioGenerator({ selectedVectors, onSelectScenario }:
           <button
             key={scenario.id}
             onClick={() => handleSelectScenario(scenario)}
-            className={`w-full p-4 rounded-lg border-2 transition-all text-left ${
+            className={`w-full p-4 rounded-lg border-2 transition-all text-left relative interactive-scale ${
               selectedScenarioId === scenario.id
-                ? 'border-blue-500 bg-blue-50'
-                : 'border-slate-200 bg-white hover:border-slate-300'
+                ? 'border-emerald-500 bg-gradient-to-br from-emerald-50 to-white shadow-md hover:shadow-lg'
+                : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm'
             }`}
           >
+            {selectedScenarioId === scenario.id && (
+              <div className="absolute -inset-0.5 bg-emerald-400/20 rounded-lg blur-md -z-10"></div>
+            )}
             <div className="flex items-start gap-3">
               {/* Radio Button */}
               <div className="mt-1">
-                <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
                   selectedScenarioId === scenario.id
-                    ? 'border-blue-600 bg-blue-600'
+                    ? 'border-emerald-600 bg-emerald-600 shadow-sm'
                     : 'border-slate-300 bg-white'
                 }`}>
                   {selectedScenarioId === scenario.id && (
-                    <div className="w-2 h-2 rounded-full bg-white"></div>
+                    <div className="w-2 h-2 rounded-full bg-white animate-in fade-in zoom-in duration-200"></div>
                   )}
                 </div>
               </div>
@@ -138,13 +151,13 @@ export default function ScenarioGenerator({ selectedVectors, onSelectScenario }:
               <div className="flex-1">
                 <div className="flex items-start justify-between mb-2">
                   <div>
-                    <h4 className="font-semibold text-slate-900 mb-1">
+                    <h4 className="font-semibold text-slate-900 mb-1 tracking-tight">
                       Scenario {scenario.id}: {scenario.title}
                     </h4>
                     <div className="flex items-center gap-1.5 flex-wrap">
-                      <span className="text-xs text-slate-500">Vectors:</span>
+                      <span className="text-xs text-slate-500 font-medium">Vectors:</span>
                       {scenario.vectors.map((vector, idx) => (
-                        <Badge key={idx} variant="outline" className="bg-slate-100 text-slate-700 border-slate-200 gap-1">
+                        <Badge key={idx} variant="outline" className="bg-gradient-to-r from-slate-100 to-slate-50 text-slate-700 border-slate-200 gap-1 shadow-sm">
                           {vectorIcons[vector]}
                           {vectorNames[vector]}
                         </Badge>
@@ -153,7 +166,7 @@ export default function ScenarioGenerator({ selectedVectors, onSelectScenario }:
                   </div>
                 </div>
 
-                <p className="text-sm text-slate-600 mb-3 leading-relaxed">
+                <p className="text-sm text-slate-600 mb-3 leading-relaxed font-medium">
                   "{scenario.description}"
                 </p>
 
@@ -161,6 +174,7 @@ export default function ScenarioGenerator({ selectedVectors, onSelectScenario }:
                   <Button
                     variant="ghost"
                     size="sm"
+                    className="interactive-scale hover:bg-slate-100"
                     onClick={(e) => {
                       e.stopPropagation();
                       // Handle edit
@@ -172,6 +186,7 @@ export default function ScenarioGenerator({ selectedVectors, onSelectScenario }:
                   <Button
                     variant="ghost"
                     size="sm"
+                    className="interactive-scale hover:bg-slate-100"
                     onClick={(e) => {
                       e.stopPropagation();
                       // Handle preview
@@ -188,11 +203,12 @@ export default function ScenarioGenerator({ selectedVectors, onSelectScenario }:
       </div>
 
       {selectedScenarioId && (
-        <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200 flex items-center justify-between">
-          <div className="text-sm text-green-900">
-            <strong>Scenario {selectedScenarioId}</strong> selected and ready to launch
+        <div className="mt-4 p-3 bg-gradient-to-r from-emerald-50 to-green-50 rounded-lg border border-emerald-200/60 shadow-sm flex items-center justify-between">
+          <div className="text-sm text-slate-900">
+            <span className="font-bold text-emerald-700">Scenario {selectedScenarioId}</span>
+            <span className="font-medium"> selected and ready to launch</span>
           </div>
-          <Badge className="bg-green-600 text-white border-0">
+          <Badge className="bg-gradient-to-r from-emerald-600 to-emerald-700 text-white border-0 shadow-md gap-1">
             <Rocket className="w-3 h-3" />
             Ready
           </Badge>
