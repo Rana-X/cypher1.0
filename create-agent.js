@@ -237,12 +237,26 @@ const assistantConfig = {
   modelOutputInMessagesEnabled: true
 };
 
-async function createAssistant() {
+async function createOrUpdateAssistant() {
   try {
-    console.log('🚀 Creating Vapi assistant...\n');
+    const existingAssistantId = process.env.ASSISTANT_ID;
+    const isUpdate = existingAssistantId && existingAssistantId !== 'your_assistant_id_here';
 
-    const response = await fetch('https://api.vapi.ai/assistant', {
-      method: 'POST',
+    if (isUpdate) {
+      console.log('🔄 Updating existing assistant...\n');
+      console.log(`   Assistant ID: ${existingAssistantId}\n`);
+    } else {
+      console.log('🚀 Creating new Vapi assistant...\n');
+    }
+
+    const url = isUpdate
+      ? `https://api.vapi.ai/assistant/${existingAssistantId}`
+      : 'https://api.vapi.ai/assistant';
+
+    const method = isUpdate ? 'PATCH' : 'POST';
+
+    const response = await fetch(url, {
+      method,
       headers: {
         'Authorization': `Bearer ${VAPI_API_KEY}`,
         'Content-Type': 'application/json'
@@ -257,21 +271,30 @@ async function createAssistant() {
 
     const assistant = await response.json();
 
-    console.log('✅ Assistant created successfully!\n');
+    if (isUpdate) {
+      console.log('✅ Assistant updated successfully!\n');
+    } else {
+      console.log('✅ Assistant created successfully!\n');
+    }
+
     console.log('📋 Assistant Details:');
     console.log(`   ID: ${assistant.id}`);
     console.log(`   Name: ${assistant.name}`);
     console.log(`   Voice: ${assistant.voice.provider} - ${assistant.voice.voiceId}`);
     console.log(`   Model: ${assistant.model.model}`);
-    console.log('\n💾 Save this Assistant ID for making calls:');
-    console.log(`   ASSISTANT_ID=${assistant.id}`);
-    console.log('\n📝 Add it to your .env file to use with make-call.js\n');
+
+    if (!isUpdate) {
+      console.log('\n💾 Save this Assistant ID for making calls:');
+      console.log(`   ASSISTANT_ID=${assistant.id}`);
+      console.log('\n📝 Add it to your .env file to use with make-call.js');
+    }
+    console.log('');
 
     return assistant;
   } catch (error) {
-    console.error('❌ Error creating assistant:', error.message);
+    console.error('❌ Error:', error.message);
     process.exit(1);
   }
 }
 
-createAssistant();
+createOrUpdateAssistant();
