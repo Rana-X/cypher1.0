@@ -205,7 +205,7 @@ const assistantConfig = {
   },
   // Smart interruption handling
   stopSpeakingPlan: {
-    numWords: 5, // Require 5 words before interrupting (prevents mid-sentence cuts)
+    numWords: 3, // Require 3 words before interrupting (more responsive)
     voiceSeconds: 0.4, // Voice activity threshold
     backoffSeconds: 0.5, // Quick recovery after interruption
     acknowledgementPhrases: [
