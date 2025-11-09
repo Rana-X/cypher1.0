@@ -56,7 +56,7 @@ export default function Dashboard() {
       <CommandPalette open={commandOpen} onOpenChange={setCommandOpen} />
 
       <div className="px-8 py-6 relative z-10">
-        {/* Logo Header */}
+        {/* Page Header */}
         <motion.div
           className="mb-4"
           initial={{ opacity: 0, y: -10 }}
@@ -65,11 +65,7 @@ export default function Dashboard() {
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="relative">
-                <Shield className="w-6 h-6 text-blue-600" />
-                <div className="absolute -inset-1 bg-blue-600/20 rounded-full blur-md -z-10"></div>
-              </div>
-              <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Cypher</h1>
+              <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Dashboard</h1>
               <div className="flex items-center gap-1.5 ml-2 px-2 py-0.5 bg-green-100 text-green-700 text-xs font-medium rounded-full">
                 <div className="w-1.5 h-1.5 bg-green-500 rounded-full pulse-dot"></div>
                 Live
