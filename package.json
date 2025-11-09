@@ -1,0 +1,23 @@
+{
+  "name": "vapi-voice-agent",
+  "version": "1.0.0",
+  "description": "Vapi AI voice agent backend for outbound calls",
+  "main": "create-agent.js",
+  "type": "module",
+  "scripts": {
+    "create-agent": "node create-agent.js",
+    "make-call": "node make-call.js"
+  },
+  "keywords": [
+    "vapi",
+    "voice-agent",
+    "ai",
+    "outbound-calls"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "node-fetch": "^3.3.2"
+  }
+}
