@@ -33,6 +33,10 @@ const callConfig = {
   phoneNumberId: TWILIO_PHONE_NUMBER_ID,
   customer: {
     number: TARGET_PHONE_NUMBER
+  },
+  assistantOverrides: {
+    backgroundSound: "https://raw.githubusercontent.com/Rana-X/cypher1.0/main/backend/market-street.mp3",
+    backgroundDenoisingEnabled: false
   }
 };
 
