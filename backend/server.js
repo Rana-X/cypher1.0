@@ -43,9 +43,6 @@ if (missingVars.length > 0) {
   process.exit(1);
 }
 
-// Store call data in memory (in production, use a database)
-const activeCalls = new Map();
-
 // API endpoint to trigger a call
 app.post('/api/launch-training', async (req, res) => {
   try {
@@ -128,15 +125,15 @@ app.post('/api/launch-training', async (req, res) => {
     }
     console.log('\n📱 The phone should ring shortly!\n');
 
-    // Store call data for later use in webhook
-    activeCalls.set(call.id, {
+    // Send email notification immediately
+    await sendTrainingInitiatedEmail({
       callId: call.id,
       employeeName,
       employeeEmail,
       phoneNumber,
       scenario,
       vectors,
-      startedAt: new Date().toISOString()
+      startedAt: call.startedAt || new Date().toISOString()
     });
 
     // Return success response
@@ -156,22 +153,21 @@ app.post('/api/launch-training', async (req, res) => {
   }
 });
 
-// Function to send email notification
-async function sendTrainingCompletionEmail(callData, callResult) {
+// Function to send email notification when training call is initiated
+async function sendTrainingInitiatedEmail(callData) {
   if (!resend || !TO_EMAIL) {
     console.warn('⚠️  Skipping email: Resend not configured or TO_EMAIL not set');
     return;
   }
 
   try {
-    const { employeeName, employeeEmail, scenario, vectors, startedAt } = callData;
-    const { endedAt, duration, status } = callResult;
+    const { callId, employeeName, employeeEmail, scenario, vectors, startedAt } = callData;
 
-    console.log('\n📧 Sending training completion email...');
+    console.log('\n📧 Sending training initiated email...');
 
     const emailHtml = `
-      <h2>Training Call Completed</h2>
-      <p>A phishing training call has been completed.</p>
+      <h2>Training Call Initiated</h2>
+      <p>A phishing training call has been initiated and the employee should be receiving the call shortly.</p>
 
       <h3>Employee Information:</h3>
       <ul>
@@ -181,21 +177,19 @@ async function sendTrainingCompletionEmail(callData, callResult) {
 
       <h3>Training Details:</h3>
       <ul>
+        <li><strong>Call ID:</strong> ${callId}</li>
         <li><strong>Scenario:</strong> ${scenario?.title || 'Unknown'}</li>
         <li><strong>Attack Vectors:</strong> ${vectors?.join(', ') || 'None'}</li>
-        <li><strong>Started:</strong> ${new Date(startedAt).toLocaleString()}</li>
-        <li><strong>Ended:</strong> ${new Date(endedAt).toLocaleString()}</li>
-        <li><strong>Duration:</strong> ${duration ? `${duration} seconds` : 'Unknown'}</li>
-        <li><strong>Status:</strong> ${status || 'Completed'}</li>
+        <li><strong>Initiated:</strong> ${new Date(startedAt).toLocaleString()}</li>
       </ul>
 
-      <p>Please review the results in the Cypher dashboard.</p>
+      <p>The training call is now in progress. You will receive call results once completed.</p>
     `;
 
     const { data, error } = await resend.emails.send({
       from: FROM_EMAIL,
       to: [TO_EMAIL],
-      subject: `Training Call Completed - ${employeeName}`,
+      subject: `Training Call Initiated - ${employeeName}`,
       html: emailHtml
     });
 
@@ -210,55 +204,6 @@ async function sendTrainingCompletionEmail(callData, callResult) {
     console.error('❌ Error sending email:', error);
   }
 }
-
-// Webhook endpoint to receive Vapi call status updates
-app.post('/api/webhook/vapi', async (req, res) => {
-  try {
-    const event = req.body;
-
-    console.log('\n🔔 Webhook received from Vapi:');
-    console.log(`   Event Type: ${event.message?.type || 'unknown'}`);
-
-    // Log the call ID if available
-    const callId = event.message?.call?.id;
-    if (callId) {
-      console.log(`   Call ID: ${callId}`);
-    }
-
-    // Handle call ended event
-    if (event.message?.type === 'end-of-call-report' ||
-        event.message?.type === 'call-ended' ||
-        event.message?.status === 'ended') {
-
-      const call = event.message?.call;
-      const callId = call?.id;
-
-      if (callId && activeCalls.has(callId)) {
-        const callData = activeCalls.get(callId);
-
-        console.log(`\n📞 Call ended for ${callData.employeeName}`);
-        console.log(`   Duration: ${call?.duration || 'Unknown'} seconds`);
-
-        // Send email notification
-        await sendTrainingCompletionEmail(callData, {
-          endedAt: call?.endedAt || new Date().toISOString(),
-          duration: call?.duration,
-          status: call?.status
-        });
-
-        // Clean up
-        activeCalls.delete(callId);
-      }
-    }
-
-    // Respond quickly to Vapi
-    res.status(200).json({ received: true });
-
-  } catch (error) {
-    console.error('❌ Error processing webhook:', error);
-    res.status(500).json({ error: 'Webhook processing failed' });
-  }
-});
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -275,6 +220,5 @@ app.listen(PORT, () => {
   console.log(`   Running on http://localhost:${PORT}`);
   console.log(`   Health check: http://localhost:${PORT}/api/health`);
   console.log(`   Launch endpoint: POST http://localhost:${PORT}/api/launch-training`);
-  console.log(`   Vapi webhook: POST http://localhost:${PORT}/api/webhook/vapi`);
   console.log('\n✅ Ready to trigger training calls!\n');
 });
